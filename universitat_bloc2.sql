@@ -1,0 +1,12 @@
+use universidad;
+select count(*) from persona where tipo='alumno';
+select count(*) from persona where tipo='alumno' and substring(fecha_nacimiento,1,4)='1999';
+select d.nombre, count(*) as 'total profesores' from departamento as d inner join profesor as p on d.id=p.id_departamento group by d.nombre order by count(*) desc;
+select d.nombre, count(id_profesor) as 'total profesores' from departamento as d left join profesor as p on d.id=p.id_departamento group by d.nombre order by count(id_profesor) desc;
+select g.nombre,count(a.nombre) as 'total asignaturas' from grado as g left join asignatura as a on g.id=a.id_grado group by g.id order by count(a.nombre) desc;
+select g.nombre,count(a.nombre) as 'total asignaturas' from grado as g left join asignatura as a on g.id=a.id_grado group by g.id having count(a.nombre)>40 order by count(a.nombre) desc;
+select g.nombre,a.tipo,sum(a.creditos) as 'suma creditos' from grado as g inner join asignatura as a on g.id=a.id_grado group by g.id,a.tipo;
+select c.anyo_inicio,count(a.id_alumno) as 'total alumnos' from alumno_se_matricula_asignatura as a right join curso_escolar as c on a.id_curso_escolar=c.id group by c.id;
+select p.id,p.nombre,p.apellido1,p.apellido2,count(a.nombre) as 'total asignaturas' from persona as p left join asignatura as a on p.id=a.id_profesor where p.tipo='profesor' group by p.id order by count(a.nombre) desc;
+select * from persona where tipo='alumno' order by fecha_nacimiento desc limit 1;
+select distinct ps.* from profesor as p inner join persona as ps on p.id_profesor=ps.id inner join asignatura as a on p.id_profesor=a.id_profesor;
